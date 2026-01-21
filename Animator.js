@@ -5,6 +5,7 @@ class Animator {
 
         this.elapsedTime = 0;
         this.totalTime = frameCount * frameDuration;
+        this.currentTime = 0;
     };
 
 
@@ -13,11 +14,12 @@ class Animator {
         const frame = this.currentFrame();
 
         if(this.loop && this.elapsedTime >= this.totalTime - this.frameDuration) {
+            this.currentTime += this.elapsedTime;
             this.elapsedTime = 0;
         }
 
         ctx.save();
-        ctx.scale(scale*2, 2);
+        ctx.scale(scale*3, 3);
         ctx.drawImage(this.spritesheet,
             this.xStart + this.width*frame, this.yStart,
             this.width, this.height,
@@ -36,6 +38,10 @@ class Animator {
 
     reset() {
         this.elapsedTime = 0;
+    }
+
+    getCurrentTime() {
+        return this.currentTime;
     }
 
 }

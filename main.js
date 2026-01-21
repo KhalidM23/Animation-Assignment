@@ -11,6 +11,8 @@ ASSET_MANAGER.queueDownload("./chopper.png");
 ASSET_MANAGER.queueDownload("./punch1.png");
 ASSET_MANAGER.queueDownload("./punch2.png");
 ASSET_MANAGER.queueDownload("./punch3.png");
+ASSET_MANAGER.queueDownload("./jumpchopper.png");
+ASSET_MANAGER.queueDownload("./idlechopper.png");
 
 ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");
