@@ -21,6 +21,39 @@ class GameEngine {
         };
     };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // helper method to check if keys are being pressed
+    isAnyKeyPressed() {
+        return Object.values(this.keys).some(key => key === true);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     init(ctx) {
         this.ctx = ctx;
         this.startInput();
@@ -41,6 +74,79 @@ class GameEngine {
             x: e.clientX - this.ctx.canvas.getBoundingClientRect().left,
             y: e.clientY - this.ctx.canvas.getBoundingClientRect().top
         });
+
+
+        this.ctx.canvas.addEventListener("keydown", e => {
+            switch(e.code) {
+                case "ArrowLeft":
+                case "KeyA":
+                    this.keys['KeyA'] = true;
+                    this.keys['ArrowLeft'] = true;
+                    break;
+                case "ArrowRight":
+                case "KeyD":
+                    this.keys['KeyD'] = true;
+                    this.keys['ArrowRight'] = true;
+                    break;
+
+                case "ArrowUp":
+                case "KeyW":
+                    this.keys['KeyW'] = true;
+                    this.keys['ArrowUp'] = true;
+                    break;
+
+                case "ArrowDown":
+                case "KeyS":
+                    this.keys['KeyS'] = true;
+                    this.keys['ArrowDown'] = true;
+                    break;
+
+                case "KeyF":
+                    this.keys['KeyF'] = true;
+                    break;
+
+                case "ShiftRight":
+                case "ShiftLeft":
+                    this.keys['Shift'] = true;
+                    break;
+            }
+        }, false);
+
+        this.ctx.canvas.addEventListener("keyup", e => {
+            switch(e.code) {
+                case "ArrowLeft":
+                case "KeyA":
+                    this.keys['KeyA'] = false;
+                    this.keys['ArrowLeft'] = false;
+                    break;
+                case "ArrowRight":
+                case "KeyD":
+                    this.keys['KeyD'] = false;
+                    this.keys['ArrowRight'] = false;
+                    break;
+
+                case "ArrowUp":
+                case "KeyW":
+                    this.keys['KeyW'] = false;
+                    this.keys['ArrowUp'] = false;
+                    break;
+
+                case "ArrowDown":
+                case "KeyS":
+                    this.keys['KeyS'] = false;
+                    this.keys['ArrowDown'] = false;
+                    break;
+
+                case "KeyF":
+                    this.keys['KeyF'] = false;
+                    break;
+
+                case "ShiftLeft":
+                case "ShiftRight":
+                    this.keys['Shift'] = false;
+                    break;
+            }
+        }, false);
         
         this.ctx.canvas.addEventListener("mousemove", e => {
             if (this.options.debugging) {
@@ -72,8 +178,8 @@ class GameEngine {
             this.rightclick = getXandY(e);
         });
 
-        this.ctx.canvas.addEventListener("keydown", event => this.keys[event.key] = true);
-        this.ctx.canvas.addEventListener("keyup", event => this.keys[event.key] = false);
+        //.ctx.canvas.addEventListener("keydown", event => this.keys[event.key] = true);
+        //this.ctx.canvas.addEventListener("keyup", event => this.keys[event.key] = false);
     };
 
     addEntity(entity) {
