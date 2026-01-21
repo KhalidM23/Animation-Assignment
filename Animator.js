@@ -17,7 +17,7 @@ class Animator {
         }
 
         ctx.save();
-        ctx.scale(scale*10, 10);
+        ctx.scale(scale*2, 2);
         ctx.drawImage(this.spritesheet,
             this.xStart + this.width*frame, this.yStart,
             this.width, this.height,

@@ -9,8 +9,8 @@ class chopper {
         this.runAnimator = new Animator(ASSET_MANAGER.getAsset("./runchopper.png"), 5, 0, 70, 71, 6, 0.2,true);
         this.currentAnimator = this.walkingAnimator;
         this.game = gameEngine;
-        this.x = 245;
-        this.y = 220;
+        this.x = 260;
+        this.y = 170;
         this.speed = 200;
         this.scale = 1
         this.punchCount = 1;
@@ -18,10 +18,10 @@ class chopper {
 
     update() {
         if(this.x < 0){
-            this.x += 410;
+            this.x += 480;
         } 
-        if (this.x > 450) {
-            this.x -= 440;
+        if (this.x > 500) {
+            this.x -= 490;
         }
         if(this.y < 0) {
             this.y += 320;
