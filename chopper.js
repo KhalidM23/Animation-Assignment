@@ -35,8 +35,10 @@ class chopper {
         console.log("Canvas width:", canvasWidth);
         if(this.x < 0) {
             this.x = 520;
+            this.game.ctx.canvas.style.backgroundImage = "url(background.png)"
         } else if(this.x > 540) {
             this.x = 0; 
+            this.game.ctx.canvas.style.backgroundImage = "url(background2.png)"
         }
 
         /*
