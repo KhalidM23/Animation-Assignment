@@ -8,17 +8,26 @@ class chopper {
         this.monsterAnimator = new Animator(ASSET_MANAGER.getAsset("./monsterchopper.png"), 10, 0, 290, 316, 6, 0.14, true);
         this.runAnimator = new Animator(ASSET_MANAGER.getAsset("./runchopper.png"), 5, 0, 70, 71, 6, 0.2,true);
         this.jumpAnimator = new Animator(ASSET_MANAGER.getAsset("./jumpchopper.png"), 0, 0, 89, 83, 8, 0.08,false);
+        this.idleAnimator = new Animator(ASSET_MANAGER.getAsset("./idlechopper.png"), 0, 0, 80, 74, 6, 0.2,true);
+        this.deadAnimator = new Animator(ASSET_MANAGER.getAsset("./deadchopper.png"), 0, 0, 78, 70, 4, 0.3,false);
         this.currentAnimator = this.walkingAnimator;
+        this.dummyAnimator = this.idleAnimator;
+        this.backgroundNumber = 1;
         this.game = gameEngine;
         this.x = 360;
         this.y = 140;
         this.speed = 150;
         this.scale = 1
         this.punchCount = 1;
+        this.idleX = this.x;
+        this.idleY = this.y;
     };
 
     update() {
         
+
+        
+
 
         if(this.game.keys['ArrowLeft'] || this.game.keys['KeyA']) {
             this.scale = 1;
@@ -31,14 +40,20 @@ class chopper {
         }
 
         const canvasWidth = this.game.ctx.canvas.width;
-        console.log("X position:", this.x);
-        console.log("Canvas width:", canvasWidth);
         if(this.x < 0) {
             this.x = 520;
-            this.game.ctx.canvas.style.backgroundImage = "url(background.png)"
+            if(this.backgroundNumber == 2) {
+                this.dummyAnimator = this.idleAnimator;
+            }
+            this.game.ctx.canvas.style.backgroundImage = "url(background.png)";
+            this.backgroundNumber = 1;
         } else if(this.x > 540) {
             this.x = 0; 
-            this.game.ctx.canvas.style.backgroundImage = "url(background2.png)"
+            if(this.backgroundNumber == 1) {
+                this.dummyAnimator = this.idleAnimator;
+            }
+            this.game.ctx.canvas.style.backgroundImage = "url(background2.png)";
+            this.backgroundNumber = 2;
         }
 
         
@@ -94,8 +109,13 @@ class chopper {
             } else {
                 this.currentAnimator = this.standingAnimator;
             }
-            console.log(this.x);
+            console.log(this.x + 95);
             console.log(this.y);
+        }
+
+        if(isPunching && ((this.x + 95) >= this.idleX + 100 && (this.x + 95) <= this.idleX + 170)) {
+            console.log("Detected");
+            this.dummyAnimator = this.deadAnimator;
         }
 
         if(isJumping && this.currentAnimator.isDone()) {
@@ -139,6 +159,7 @@ class chopper {
         //ctx.scale(-1,1);
         //ctx.drawImage(ASSET_MANAGER.getAsset("./walkingchopper.png"), 0, 0, 130, 135, -100, 100, 16*3, 32*3);
         this.currentAnimator.drawFrame(this.game.clockTick,ctx,this.x,this.y,this.scale);
+        this.dummyAnimator.drawFrame(this.game.clockTick,ctx,this.idleX,this.idleY,1);
         
         //ctx.restore();
     };
