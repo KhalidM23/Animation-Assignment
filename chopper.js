@@ -8,19 +8,27 @@ class chopper {
         this.monsterAnimator = new Animator(ASSET_MANAGER.getAsset("./monsterchopper.png"), 10, 0, 290, 316, 6, 0.14, true);
         this.runAnimator = new Animator(ASSET_MANAGER.getAsset("./runchopper.png"), 5, 0, 70, 71, 6, 0.2,true);
         this.jumpAnimator = new Animator(ASSET_MANAGER.getAsset("./jumpchopper.png"), 0, 0, 89, 83, 8, 0.08,false);
-        this.idleAnimator = new Animator(ASSET_MANAGER.getAsset("./idlechopper.png"), 0, 0, 80, 74, 6, 0.2,true);
-        this.deadAnimator = new Animator(ASSET_MANAGER.getAsset("./deadchopper.png"), 0, 0, 78, 70, 4, 0.3,false);
+        this.idleAnimator1 = new Animator(ASSET_MANAGER.getAsset("./idleluffy.png"), 6, 0, 111, 115, 4, 0.3,true);
+        this.deadAnimator1 = new Animator(ASSET_MANAGER.getAsset("./deadluffy.png"), 0, 0, 100, 103, 4, 0.1,false);
+        this.idleAnimator2 = new Animator(ASSET_MANAGER.getAsset("./idlejinbei.png"), 0, 0, 111, 115, 6, 0.5,true);
+        this.deadAnimator2 = new Animator(ASSET_MANAGER.getAsset("./deadjinbei.png"), 0, 0, 125, 103, 4, 0.2,false);
         this.currentAnimator = this.walkingAnimator;
-        this.dummyAnimator = this.idleAnimator;
+        this.dummyAnimator = this.idleAnimator1;
         this.backgroundNumber = 1;
         this.game = gameEngine;
-        this.x = 360;
+        this.x = 160;
         this.y = 140;
         this.speed = 150;
         this.scale = 1
         this.punchCount = 1;
-        this.idleX = this.x;
-        this.idleY = this.y;
+        this.idleX = 320;
+        this.idleY = 100;
+        this.luffyWidth1 = 110;
+        this.luffyWidth2 = 200;
+        this.jinbeiWidth1 = 95;
+        this.jinbeiWidth2 = 210;
+        this.width1 = 110;
+        this.width2 = 200;
     };
 
     update() {
@@ -42,18 +50,45 @@ class chopper {
         const canvasWidth = this.game.ctx.canvas.width;
         if(this.x < 0) {
             this.x = 520;
+            this.dummyAnimator.reset();
+
+            
             if(this.backgroundNumber == 2) {
-                this.dummyAnimator = this.idleAnimator;
+                this.game.ctx.canvas.style.backgroundImage = "url(background.png)";
+                this.backgroundNumber = 1;
+                this.dummyAnimator = this.idleAnimator1;
+                this.width1 = this.luffyWidth1;
+                this.width2 = this.luffyWidth2;
+            } else {
+                this.game.ctx.canvas.style.backgroundImage = "url(background2.png)";
+                this.backgroundNumber = 2;
+                this.dummyAnimator = this.idleAnimator2;
+                this.width1 = this.jinbeiWidth1;
+                this.width2 = this.jinbeiWidth2;
             }
-            this.game.ctx.canvas.style.backgroundImage = "url(background.png)";
-            this.backgroundNumber = 1;
+            
+            
         } else if(this.x > 540) {
             this.x = 0; 
+            this.dummyAnimator.reset();
+
+            
             if(this.backgroundNumber == 1) {
-                this.dummyAnimator = this.idleAnimator;
+                this.game.ctx.canvas.style.backgroundImage = "url(background2.png)";
+                this.backgroundNumber = 2;
+                this.dummyAnimator = this.idleAnimator2;
+                this.width1 = this.jinbeiWidth1;
+                this.width2 = this.jinbeiWidth2;
+
+            } else {
+                this.game.ctx.canvas.style.backgroundImage = "url(background.png)";
+                this.backgroundNumber = 1;
+                this.dummyAnimator = this.idleAnimator1;
+                this.width1 = this.luffyWidth1;
+                this.width2 = this.luffyWidth2;
             }
-            this.game.ctx.canvas.style.backgroundImage = "url(background2.png)";
-            this.backgroundNumber = 2;
+            
+            
         }
 
         
@@ -113,9 +148,14 @@ class chopper {
             console.log(this.y);
         }
 
-        if(isPunching && ((this.x + 95) >= this.idleX + 100 && (this.x + 95) <= this.idleX + 170)) {
-            console.log("Detected");
-            this.dummyAnimator = this.deadAnimator;
+        if(isPunching && ((this.x + 95) >= this.idleX + this.width1 && (this.x + 95) <= this.idleX + this.width2)) {
+            if(this.backgroundNumber == 1) {
+                this.dummyAnimator = this.deadAnimator1;
+            } else {
+                this.dummyAnimator = this.deadAnimator2;
+            }
+            this.idleY = 110;
+            
         }
 
         if(isJumping && this.currentAnimator.isDone()) {
