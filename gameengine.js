@@ -95,12 +95,6 @@ class GameEngine {
                     this.keys['ArrowUp'] = true;
                     break;
 
-                case "ArrowDown":
-                case "KeyS":
-                    this.keys['KeyS'] = true;
-                    this.keys['ArrowDown'] = true;
-                    break;
-
                 case "KeyF":
                     this.keys['KeyF'] = true;
                     break;
@@ -129,12 +123,6 @@ class GameEngine {
                 case "KeyW":
                     this.keys['KeyW'] = false;
                     this.keys['ArrowUp'] = false;
-                    break;
-
-                case "ArrowDown":
-                case "KeyS":
-                    this.keys['KeyS'] = false;
-                    this.keys['ArrowDown'] = false;
                     break;
 
                 case "KeyF":

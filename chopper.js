@@ -41,15 +41,6 @@ class chopper {
             this.game.ctx.canvas.style.backgroundImage = "url(background2.png)"
         }
 
-        /*
-        if(this.game.keys['ArrowDown'] || this.game.keys['KeyS']) {
-            this.y += this.speed * this.game.clockTick;
-        }
-
-        if(this.game.keys['ArrowUp'] || this.game.keys['KeyW']) {
-            this.y -= this.speed * this.game.clockTick;
-        }
-            */
         
 
         let isPunching = (this.currentAnimator === this.punchAnimator1 || 
